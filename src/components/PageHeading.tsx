@@ -1,7 +1,5 @@
-export default function Header() {
+export default function PageHeading() {
   return (
-    <header className="header">
-      The Header
-    </header >
+    <h1> Give Feedback. <span className="u-italic u-bold"> Publicly.</span> </h1>
   );
 }

@@ -1,7 +1,9 @@
 export default function Footer() {
   return (
     <ol className="feedback-list">
-      Test
+      <li className="feedback">
+        Footer
+      </li>
     </ol>
   );
 }
