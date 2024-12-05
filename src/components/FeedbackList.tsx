@@ -1,23 +1,25 @@
-import UpvoteIcon from "./UpvoteIcon";
+import { useEffect, useState } from "react";
+import FeedbackItemListEntry from "./FeedbackItemListEntry";
+import { FeedbackItem } from "../types/types";
 
-export default function Footer() {
+const API_URL = "https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks";
+
+export default function FeedbackList() {
+  const [feedbackItems, setFeedbackItems] = useState<FeedbackItem[]>([]);
+
+  useEffect(() => {
+    const fetchFeedback = async () => {
+      // I intentionally left out the error handling for brevity, we should use react-query for this
+      const response = await fetch(API_URL);
+      const data = await response.json();
+      setFeedbackItems(data.feedbacks);
+    };
+    fetchFeedback();
+  }, []);
+
   return (
     <ol className="feedback-list">
-      <li className="feedback">
-        <button>
-          <span>594</span>
-          <UpvoteIcon />
-        </button>
-        <div>
-          <p>B</p>
-        </div>
-
-        <div>
-          <p>ByteGrad</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-        <p>4d</p>
-      </li>
+      {feedbackItems.map((item) => <FeedbackItemListEntry {...item} />)}
     </ol>
   );
 }
