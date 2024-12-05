@@ -1,13 +1,27 @@
+import { useState } from "react";
 import { FeedbackItem } from "../types/types";
 import UpvoteIcon from "./UpvoteIcon";
 
+type FeedbackItemListEntryProps = {
+  feedbackItem: FeedbackItem;
+  isExpanded: boolean;
+  setIsExpanded: (isExpanded: boolean) => void;
+}
 
 export default function FeedbackItemListEntry(feedbackItem: FeedbackItem) {
   const { badgeLetter, company, text, upvoteCount, daysAgo } = feedbackItem;
+  const [managedUpvoteCount, setUpvoteCount] = useState(upvoteCount);
+
+  const handleOnUpvoteCountChange = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setUpvoteCount(managedUpvoteCount + 1)
+    e.currentTarget.disabled = true;
+    e.stopPropagation();
+  }
+
   return (
     <>
-      <button>
-        <span>{upvoteCount}</span>
+      <button onClick={handleOnUpvoteCountChange}>
+        <span>{managedUpvoteCount}</span>
         <UpvoteIcon />
       </button>
       <div>
