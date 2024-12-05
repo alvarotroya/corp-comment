@@ -9,6 +9,7 @@ type FeedbackStore = {
 	companies: string[];
 	isLoading: boolean;
 	fetchFeedbacks: () => Promise<void>;
+	postFeedback: (feedback: FeedbackItem) => Promise<void>;
 	selectCompany: (company: string) => void;
 };
 
@@ -17,6 +18,11 @@ export const useFeedbackStore = create<FeedbackStore>((set, get) => ({
 	filteredFeedbacks: [],
 	companies: [],
 	isLoading: false,
+	selectCompany: (company: string) => {
+		const allFeedbacks = get().feedbacks;
+		const selectedCompanies = company ? allFeedbacks.filter((feedback) => feedback.company === company) : allFeedbacks
+		set({ filteredFeedbacks: selectedCompanies });
+	},
 	fetchFeedbacks: async () => {
 		set({ isLoading: true });
 		const response = await fetch(API_URL);
@@ -29,10 +35,18 @@ export const useFeedbackStore = create<FeedbackStore>((set, get) => ({
 
 		set({ isLoading: false });
 	},
-	selectCompany: (company: string) => {
-		const allFeedbacks = get().feedbacks;
-		const selectedCompanies = company ? allFeedbacks.filter((feedback) => feedback.company === company) : allFeedbacks
-		set({ filteredFeedbacks: selectedCompanies });
+	postFeedback: async (feedback: FeedbackItem) => {
+		set((state) => ({ feedbacks: [feedback, ...state.feedbacks] }));
+		set((state) => ({ filteredFeedbacks: [feedback, ...state.filteredFeedbacks] }));
+		set((state) => ({ companies: state.companies.includes(feedback.company) ? state.companies : [...state.companies, feedback.company] }));
+		await fetch(API_URL, {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(feedback),
+		});
 	},
 }));
 
