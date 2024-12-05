@@ -3,7 +3,7 @@ import FeedbackItemListEntry from "./FeedbackItemListEntry";
 import { useFeedbackStore } from "../stores/feedbacks";
 
 export default function FeedbackList() {
-  const feedbackItems = useFeedbackStore((state) => state.feedbacks);
+  const feedbackItems = useFeedbackStore((state) => state.filteredFeedbacks);
   const isLoading = useFeedbackStore((state) => state.isLoading);
   const fetchFeedbackItems = useFeedbackStore((state) => state.fetchFeedbacks);
 
