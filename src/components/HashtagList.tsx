@@ -9,9 +9,11 @@ export default function HashtagList() {
     <ul className="hashtags">
       {
         companies.map((company) => (
-          <HashtagButton company={company} />
+          <li key={company}>
+            <HashtagButton company={company} />
+          </li >
         ))
-      }
+      };
     </ul>
   );
 }

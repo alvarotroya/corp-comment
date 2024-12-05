@@ -30,7 +30,9 @@ export const useFeedbackStore = create<FeedbackStore>((set, get) => ({
 		set({ isLoading: false });
 	},
 	selectCompany: (company: string) => {
-		set({ filteredFeedbacks: get().feedbacks.filter((feedback) => feedback.company === company) });
+		const allFeedbacks = get().feedbacks;
+		const selectedCompanies = company ? allFeedbacks.filter((feedback) => feedback.company === company) : allFeedbacks
+		set({ filteredFeedbacks: selectedCompanies });
 	},
 }));
 

@@ -3,9 +3,9 @@ import UpvoteIcon from "./UpvoteIcon";
 
 
 export default function FeedbackItemListEntry(feedbackItem: FeedbackItem) {
-  const { id, badgeLetter, company, text, upvoteCount, daysAgo } = feedbackItem;
+  const { badgeLetter, company, text, upvoteCount, daysAgo } = feedbackItem;
   return (
-    <li key={id} className="feedback">
+    <>
       <button>
         <span>{upvoteCount}</span>
         <UpvoteIcon />
@@ -21,6 +21,6 @@ export default function FeedbackItemListEntry(feedbackItem: FeedbackItem) {
         </p>
       </div>
       <p>{daysAgo > 0 ? `${daysAgo}d` : 'now'}</p>
-    </li>
+    </>
   );
 }

@@ -15,8 +15,12 @@ export default function FeedbackList() {
     <>
       {isLoading && <div className="spinner" aria-hidden="true" />}
       <ol className="feedback-list">
-        {feedbackItems.map((item) => <FeedbackItemListEntry {...item} />)}
-      </ol>
+        {feedbackItems.map((item) => (
+          <li key={item.id} className="feedback">
+            <FeedbackItemListEntry {...item} />
+          </li >
+        ))}
+      </ol >
     </>
   );
 }
