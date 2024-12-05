@@ -3,9 +3,9 @@ import UpvoteIcon from "./UpvoteIcon";
 
 
 export default function FeedbackItemListEntry(feedbackItem: FeedbackItem) {
-  const { badgeLetter, company, text, upvoteCount, daysAgo } = feedbackItem;
+  const { id, badgeLetter, company, text, upvoteCount, daysAgo } = feedbackItem;
   return (
-    <li className="feedback">
+    <li key={id} className="feedback">
       <button>
         <span>{upvoteCount}</span>
         <UpvoteIcon />

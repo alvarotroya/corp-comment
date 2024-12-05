@@ -1,23 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import FeedbackItemListEntry from "./FeedbackItemListEntry";
-import { FeedbackItem } from "../types/types";
-
-const API_URL = "https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks";
+import { useFeedbackStore } from "../stores/feedbacks";
 
 export default function FeedbackList() {
-  const [feedbackItems, setFeedbackItems] = useState<FeedbackItem[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const feedbackItems = useFeedbackStore((state) => state.feedbacks);
+  const isLoading = useFeedbackStore((state) => state.isLoading);
+  const fetchFeedbackItems = useFeedbackStore((state) => state.fetchFeedbacks);
 
   useEffect(() => {
-    setIsLoading(true);
-    const fetchFeedback = async () => {
-      // I intentionally left out the error handling for brevity, we should use react-query for this
-      const response = await fetch(API_URL);
-      const data = await response.json();
-      setFeedbackItems(data.feedbacks);
-      setIsLoading(false);
-    };
-    fetchFeedback();
+    fetchFeedbackItems();
   }, []);
 
   return (
